@@ -1,0 +1,21 @@
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: vetsync
+      MYSQL_USER: vetsync
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Define DB_PASSWORD antes de iniciar MySQL}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Define MYSQL_ROOT_PASSWORD antes de iniciar MySQL}
+    ports:
+      - "3306:3306"
+    volumes:
+      - vetsync_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+volumes:
+  vetsync_mysql_data:

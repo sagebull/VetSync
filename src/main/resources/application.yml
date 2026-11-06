@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: vetsync-api
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/vetsync?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:vetsync}
+    password: ${DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+server:
+  port: ${PORT:8080}
+vetsync:
+  scheduling:
+    zone: ${VETSYNC_ZONE:UTC}
+  notifications:
+    enabled: ${VETSYNC_NOTIFICATIONS_ENABLED:true}
+    reminder-minutes: ${VETSYNC_REMINDER_MINUTES:60}
+    fixed-delay: ${VETSYNC_NOTIFICATION_FIXED_DELAY:PT1M}
+  security:
+    jwt-secret: ${VETSYNC_JWT_SECRET:}
+    staff-email: ${VETSYNC_STAFF_EMAIL:}
+    staff-password: ${VETSYNC_STAFF_PASSWORD:}
